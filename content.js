@@ -6,5 +6,5 @@
     if (href !== window.location.href && isUnique) urls.push(href);
     return urls;
   }, []);
-  chrome.runtime.sendMessage({ urls });
+  chrome.runtime.sendMessage({ urls, tabIndex });
 })();
