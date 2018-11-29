@@ -2,7 +2,10 @@
   "name": "Open Links",
   "version": "0.0.0.2",
   "description": "Automatically open live link and repo url for a Jobberwocky projects.",
-  "permissions": ["tabs", "https://*/"],
+  "permissions": [
+    "tabs",
+    "https://progress.appacademy.io/jobberwocky/job_app_materials/*"
+  ],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
