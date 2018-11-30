@@ -6,16 +6,16 @@ chrome.runtime.onMessage.addListener(request =>
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.title === "Jobberwocky") {
-    chrome.tabs.executeScript(
-      tabId,
-      {
-        code: `const tabIndex = ${tab.index}`,
-      },
-      () => {
-        chrome.tabs.executeScript(tabId, {
-          file: "content.js",
-        });
-      },
-    );
+    chrome.tabs.executeScript(tabId, {
+      code: `const tabIndex = ${tab.index};
+      const containers = [...document.querySelectorAll("small")];
+      const urls = containers.reduce((urls, container) => {
+        const { href } = container.children[0];
+        const isUnique = urls[0] !== href;
+        if (href !== window.location.href && isUnique) urls.push(href);
+        return urls;
+      }, []);
+      chrome.runtime.sendMessage({ urls, tabIndex });`,
+    });
   }
 });
