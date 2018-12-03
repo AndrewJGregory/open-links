@@ -1,6 +1,6 @@
 {
   "name": "Open Links",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "description": "Automatically open live link and repo url for a Jobberwocky projects.",
   "permissions": [
     "tabs",
