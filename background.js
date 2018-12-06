@@ -7,7 +7,9 @@ chrome.runtime.onMessage.addListener(request =>
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.title === "Jobberwocky") {
     chrome.tabs.executeScript(tabId, {
-      code: `const tabIndex = ${tab.index};
+      code: `
+      (() => {
+      const tabIndex = ${tab.index};
       const containers = [...document.querySelectorAll("small")];
       const urls = containers.reduce((urls, container) => {
         const { href } = container.children[0];
@@ -15,7 +17,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         if (href !== window.location.href && isUnique) urls.push(href);
         return urls;
       }, []);
-      chrome.runtime.sendMessage({ urls, tabIndex });`,
+      chrome.runtime.sendMessage({ urls, tabIndex });
+    })()`,
     });
   }
 });
