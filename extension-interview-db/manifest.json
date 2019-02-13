@@ -1,0 +1,11 @@
+{
+  "name": "Open Links DB",
+  "version": "0.0.0.4",
+  "description": "Automatically open live link and repo url for interview-db projects.",
+  "permissions": ["tabs", "https://www.interview-db.com/staff/materials/*"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "manifest_version": 2
+}
