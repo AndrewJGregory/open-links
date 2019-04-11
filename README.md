@@ -12,7 +12,7 @@ Next, I had to find a way to create tabs at specified places in the browser. I c
 
 The message passing is exactly what needed to be utilized in order to have the tabs opened in the background unfocused while passing the repo links to the background script to open the tabs. Ultimately, I settled on not using a content script because the content script cannot know what the current tab's index is. In order to have access to the tab index, a background script must be used while somehow executing JavaScript in the context of the page. Eventually, after much searching, I found that `chrome.tabs.executeScript` executes JavaScript in the context of the page, so selecting both the repo and live links with the corresponding tab index of the project page would be possible.
 
-The final code is astonshingly short:
+The final, simplified code is astonshingly short:
 
 ```js
 chrome.runtime.onMessage.addListener(request => {
@@ -34,7 +34,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 ```
 
-Whenever a tab is updated, this script listens for that the `title` of the tab is correct and that the page is completey loaded. `Interview Database` is the title of the internal website we use to keep track of materials. When the tab has loaded, attribute selectors are used to select the links and those urls as a message to the same background script. Now, the listener for `chrome.runtime.onMessage` will be triggered, and new tabs will be _exactly_ to the right of the tab.
+This code doesn't take into account malformed URLs (empty or missing http://), but it covers the idea of how the extension itself works. Whenever a tab is updated, this script listens for that the `title` of the tab is correct and that the page is completey loaded. `Interview Database` is the title of the internal website we use to keep track of materials. When the tab has loaded, attribute selectors are used to select the links and those urls as a message to the same background script. Now, the listener for `chrome.runtime.onMessage` will be triggered, and new tabs will be _exactly_ to the right of the tab.
 
 ### Future Improvements
 
