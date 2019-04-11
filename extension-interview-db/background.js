@@ -15,7 +15,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         }
         const repoUrl = formatUrl(document.querySelector('[id*=RepoUrl]').value);
         const liveUrl = formatUrl(document.querySelector('[id*=LiveUrl]').value);
-        const urls = [repoUrl, liveUrl];        
+        const urls = [repoUrl, liveUrl].filter(url => url);        
         chrome.runtime.sendMessage({urls, tabIndex: ${tab.index}})
       })();`,
     });
