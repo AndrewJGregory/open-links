@@ -9,7 +9,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     chrome.tabs.executeScript(tabId, {
       code: `
       (() => {
-        const urls = [document.querySelector('[id*=RepoUrl]').value, document.querySelector('[id*=LiveUrl]').value];
+        const formatUrl = url => {
+          if (url.slice(0, 4) !== "http") url = "http://" + url;
+          return url
+        }
+        const repoUrl = formatUrl(document.querySelector('[id*=RepoUrl]').value);
+        const liveUrl = formatUrl(document.querySelector('[id*=LiveUrl]').value);
+        const urls = [repoUrl, liveUrl];        
         chrome.runtime.sendMessage({urls, tabIndex: ${tab.index}})
       })();`,
     });
